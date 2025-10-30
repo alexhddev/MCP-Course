@@ -1,0 +1,11 @@
+{
+    "servers": {
+        "mcp-compass": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@liuyoshio/mcp-compass"
+            ]
+        }
+    }
+}
