@@ -1,0 +1,10 @@
+{
+    "servers": {
+        "mcp-AXBV-server": {
+            "command": "tsx",
+            "args": [
+                "src/Server.ts"
+            ]
+        }
+    }
+}
