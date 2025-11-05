@@ -1,5 +1,5 @@
 from mcp.server.fastmcp import FastMCP
-from quotes import get_sad_quote, get_happy_quote
+from quotes import get_sad_quote, get_happy_quote, get_quotes
 
 mcp = FastMCP("AXBV-quotes-server")
 
@@ -14,6 +14,19 @@ def get_axbv_happy_quote() -> str:
 )
 def get_axbv_sad_quote() -> str:
     return get_sad_quote()
+
+@mcp.tool(
+    name="Get_number_of_axbv_quotes"
+)
+def get_number_of_axbv_quotes(count: int):
+    try:
+        quotes = get_quotes(count)
+        return quotes
+    except ValueError as e:
+        return str(e)
+
+
+
 
 if __name__== "__main__":
     mcp.run()
