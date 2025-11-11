@@ -1,0 +1,12 @@
+{
+    "servers": {
+        "mcp-server-time": {
+            "command": "uv",
+            "args": [
+                "run",
+                "main_stdio.py"
+            ],
+            "env": {}
+        }
+    }
+}
