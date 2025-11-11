@@ -10,9 +10,9 @@
    uv add "mcp[cli]"
    ```
 
-4. **Create HelloName mcp files:**
+3. **Create HelloName mcp files:**
    - create server.py
    - create main_stdio.py
 
-5. **Test the MCP:**
+4. **Test the MCP:**
    - create .vscode/mcp.json file and add the server
