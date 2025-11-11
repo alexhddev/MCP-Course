@@ -1,10 +1,9 @@
 {
     "servers": {
         "mcp-server-hello-name": {
-            "command": "uv",
+            "command": "tsx",
             "args": [
-                "run",
-                "main_stdio.py"
+                "src/MainStdio.ts"
             ],
             "env": {}
         }

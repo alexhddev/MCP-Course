@@ -12,12 +12,12 @@
 
 3. **Install dev dependencies:**
    ```bash
-   npm install @types/express zod
+   npm install @types/node zod
    ```
 
 4. **Create HelloName mcp files:**
-   - create Server.ts
-   - create main-stdio.ts
+   - create src/Server.ts
+   - create src/MainStdio.ts
 
 5. **Test the MCP:**
    - create .vscode/mcp.json file and add the server
