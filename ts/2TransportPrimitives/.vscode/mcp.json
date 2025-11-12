@@ -7,8 +7,8 @@
             ],
             "env": {}
         },
-        "mcp-server-hello-name-http": {
-            "url": "http://localhost:4000/mcp"
-        }
+        // "mcp-server-hello-name-http": {
+        //     "url": "http://localhost:4000/mcp"
+        // }
     }
 }
