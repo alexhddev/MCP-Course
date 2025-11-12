@@ -11,6 +11,25 @@ mcp = FastMCP("Hello name MCP")
 def say_hello(name: str) -> str:
     return f'Heelo {name}! You are awesome'
 
+@mcp.tool(
+    name="get_error_logs",
+    description="Returns error logs"
+)
+def get_error_logs() -> str:
+    error_logs = []    
+    try:
+        with open("data/logs.txt", 'r') as file:
+            for line in file:
+                line = line.strip()
+                if '[ERROR]' in line:
+                    error_logs.append(line)
+    except FileNotFoundError:
+        return f"Error: File 'data/logs.txt' not found."
+    except Exception as e:
+        return f"Error reading file: {e}"
+    
+    return '\n'.join(error_logs) if error_logs else "No error logs found."
+
 
 @mcp.resource(
     uri="file:///data/logs.txt",
