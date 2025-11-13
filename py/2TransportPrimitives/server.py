@@ -57,3 +57,16 @@ def get_inventory_price_from_id(id: str) -> str:
         return "5.49 USD"
    else:
        return "Item not found"
+   
+@mcp.prompt(
+        name="History_report",
+        description="Generates a history report",
+        title="History report"
+)
+def explain_topic(topic : str, paragraphs: str) -> str:
+    "Generates a history report"
+    return (
+        f"Create a concise research report on the history of {topic},"
+        f"The main section should be {paragraphs} paragraphs long, "
+        f"Include a timeline of key events"
+    )
