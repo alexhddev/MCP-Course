@@ -1,0 +1,10 @@
+{
+    "servers": {
+        "awesome-pizza-stdio": {
+            "command": "tsx",
+            "args": [
+                "src/main-stdio.ts"
+            ]
+        }
+    }
+}
