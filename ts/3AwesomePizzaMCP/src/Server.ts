@@ -50,3 +50,55 @@ server.registerTool(
         }
     }
 )
+
+
+server.registerTool(
+    'Get-pizza-menu-with-images',
+    {
+        title: 'Get pizza menu with images',
+        description: 'Returns the awesome pizza menu with images'
+    },
+    async () => {
+        const responseMenu = await apiClient.getDailyMenu();
+        const toolResponse = []
+
+        if (responseMenu.success) {
+            for (const menuEntry of responseMenu.data) {
+                const imageUrl = `http://localhost:3000/${menuEntry.imageUrl}`
+                const base64Image = await imageUrlToBase64(imageUrl)
+
+                toolResponse.push({
+                    type: 'image' as const,
+                    data: base64Image,
+                    mimeType: 'image/png'
+                })
+                toolResponse.push({
+                    type: 'text' as const,
+                    text: menuEntry.name
+                })
+            }
+        } else {
+            toolResponse.push({
+                type: 'text' as const,
+                text: responseMenu.message!
+            })
+        } return {
+            content: toolResponse
+        }
+    }
+)
+
+async function imageUrlToBase64(imageUrl: string): Promise<string> {
+    try {
+        const response = await fetch(imageUrl)
+        if (!response.ok) {
+            throw new Error(`Failed to fetch image: ${response.statusText}`);
+        }
+        const arrayBuffer = await response.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        return buffer.toString('base64');
+    } catch (error) {
+        console.error('Error converting image to base64:', error);
+        throw error;
+    }
+}
