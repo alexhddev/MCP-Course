@@ -13,7 +13,49 @@ type MenuResponse = {
     message?: string
 }
 
-export async function getDailyMenu():Promise<MenuResponse> {
+type orderDetails = {
+    sender: string,
+    contents: {
+        name: string,
+        quantity: number
+    }[]
+}
+
+export async function makeOrder(orderDetails: orderDetails): Promise<{
+    orderId: string,
+    success: boolean,
+    message?: string
+}> {
+    try {
+        const response = await fetch(`${baseUrl}/orders`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(orderDetails)
+        });
+        const responseJSON = await response.json() 
+        return {
+            orderId: responseJSON.data.id,
+            success: true
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: error instanceof Error ? error.message : 'Unknown error occurred',
+            orderId: ''
+        }
+    }
+
+
+
+
+}
+
+
+
+export async function getDailyMenu(): Promise<MenuResponse> {
     try {
         const response = await fetch(`${baseUrl}/daily-menu`, {
             method: 'GET',

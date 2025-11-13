@@ -1,5 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import * as apiClient from './ApiClient'
+import z from "zod";
 
 export const server = new McpServer({
     name: 'awesome-pizza-mcp-ts',
@@ -87,6 +88,56 @@ server.registerTool(
         }
     }
 )
+
+server.registerTool(
+    'make-order',
+    {
+        title: 'Make order tool',
+        description: 'Make an order at awesome pizza',
+        inputSchema: {
+            items: z.array(z.object({
+                name: z.string(),
+                quantity: z.number()
+            }))
+        },
+        outputSchema: {
+            orderId: z.string()
+        }
+
+    },
+    async ({ items }) => {
+        const orderResponse = await apiClient.makeOrder({
+            sender: 'awesomeMCP',
+            contents: items
+        });
+        if (orderResponse.success) {
+            return {
+                content: [{
+                    type: 'text',
+                    text: `Order placed successfully! Order ID: ${orderResponse.orderId}`
+                }],
+                structuredContent: {
+                    orderId: orderResponse.orderId
+                }
+            }
+        } else {
+            return {
+                content: [{
+                    type: 'text' as const,
+                    text: `Failed to place order: ${orderResponse.message}`
+                }],
+                structuredContent: {
+                    orderId: ''
+                }
+            };
+        }
+    }
+)
+
+
+
+
+
 
 async function imageUrlToBase64(imageUrl: string): Promise<string> {
     try {
