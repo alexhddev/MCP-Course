@@ -35,7 +35,7 @@ export async function makeOrder(orderDetails: orderDetails): Promise<{
             },
             body: JSON.stringify(orderDetails)
         });
-        const responseJSON = await response.json() 
+        const responseJSON = await response.json()
         return {
             orderId: responseJSON.data.id,
             success: true
@@ -75,5 +75,24 @@ export async function getDailyMenu(): Promise<MenuResponse> {
             message: error instanceof Error ? error.message : 'Unknown error occurred',
             data: []
         };
+    }
+}
+
+export async function checkOrderStatus(orderId: string): Promise<string> {
+    try {
+        const response = await fetch(`${baseUrl}/orders/${orderId}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+        const responseJSON = await response.json()
+        if (responseJSON.success) {
+            return responseJSON.data.status as string
+        } else {
+            return responseJSON.message as string 
+        }
+    } catch (error) {
+        return error instanceof Error ? error.message : 'Unknown error occurred'
     }
 }

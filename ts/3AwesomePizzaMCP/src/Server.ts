@@ -134,6 +134,27 @@ server.registerTool(
     }
 )
 
+server.registerTool(
+    'Check-order-status',
+    {
+        title: 'Check order status',
+        description: 'Returns the status of a order for awesome pizza based on the order ID',
+        inputSchema: {
+            orderId: z.string()
+        }
+    },
+    async ({ orderId }) => {
+        const orderStatus = await apiClient.checkOrderStatus(orderId)
+        return {
+            content: [{
+                type: 'text',
+                text: orderStatus
+            }]
+        }
+    }
+)
+
+
 
 
 
