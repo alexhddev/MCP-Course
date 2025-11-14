@@ -1,0 +1,11 @@
+{
+    "servers": {
+        "awesome-pizza-stdio": {
+            "command": "uv",
+            "args": [
+                "run",
+                "main_stdio.py"
+            ]
+        }
+    }
+}
