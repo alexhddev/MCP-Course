@@ -1,8 +1,11 @@
 import sys
+from typing import List
 from mcp.server.fastmcp import FastMCP
 from mcp.types import TextContent, ImageContent, CallToolResult
 import requests
 import base64
+
+from api_client import OrderItem
 
 mcp = FastMCP("Awesome pizza MCP")
 
@@ -54,3 +57,16 @@ def get_pizza_menu_with_images() -> CallToolResult:
     return CallToolResult(
         content=content
     )
+
+
+@mcp.tool(
+    name="make_order",
+    description="Make an order at awesome pizza. Returns the order ID."        
+)
+def make_order(items: List[OrderItem]) -> str:
+    from api_client import make_order
+    order_response = make_order({
+        "sender": "MCP user",
+        "contents": items
+    })
+    return order_response['order_id']
