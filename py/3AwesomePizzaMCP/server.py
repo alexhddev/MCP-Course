@@ -70,3 +70,13 @@ def make_order(items: List[OrderItem]) -> str:
         "contents": items
     })
     return order_response['order_id']
+
+
+@mcp.tool(
+    name="check_order_status",
+    description="Check the status of an order by its ID."        
+)
+def check_order_status(order_id: str) -> str:
+    from api_client import check_order_status
+    status = check_order_status(order_id)
+    return status
