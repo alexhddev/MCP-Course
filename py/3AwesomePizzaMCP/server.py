@@ -1,4 +1,3 @@
-import sys
 from typing import List
 from mcp.server.fastmcp import FastMCP
 from mcp.types import TextContent, ImageContent, CallToolResult
