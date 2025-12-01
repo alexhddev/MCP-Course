@@ -1,0 +1,27 @@
+### Variables
+@baseUrl = http://localhost:4000
+@clientId = my-mcp-client
+@clientSecret = super-secret-key-12345
+@redirectUri = http://localhost:3000/callback
+@authCode = YOUR_AUTH_CODE
+@accessToken = YOUR_ACCESS_TOKEN
+
+### 1. Authorization - Get login page (open in browser)
+GET http://localhost:4000/authorize?response_type=code&client_id=my-mcp-client&redirect_uri=http://localhost:3000/callback&state=xyz123&code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM&code_challenge_method=S256&scope=read
+
+### 2. Exchange authorization code for access token
+# Note: Replace 'YOUR_AUTH_CODE' with the code received from the authorization callback
+POST {{baseUrl}}/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&code={{authCode}}&redirect_uri={{redirectUri}}&client_id={{clientId}}&client_secret={{clientSecret}}&code_verifier=dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
+
+### 3. Introspect a valid token
+# Note: Replace 'YOUR_ACCESS_TOKEN' with a valid token obtained from /token
+POST {{baseUrl}}/introspect
+Content-Type: application/x-www-form-urlencoded
+
+token={{accessToken}}&client_id={{clientId}}&client_secret={{clientSecret}}
+
+### 4. Print stored tokens (debug)
+POST {{baseUrl}}/printtokens
