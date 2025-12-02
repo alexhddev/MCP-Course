@@ -1,0 +1,22 @@
+POST http://localhost:8000/mcp
+Accept: application/json
+###
+
+POST http://localhost:8000/mcp
+Accept: application/json, text/event-stream
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN
+
+{
+  "jsonrpc": "2.0",
+  "method": "tools/list",
+  "params": {},
+  "id": 1
+}
+###
+
+GET http://localhost:8000/.well-known/oauth-protected-resource/mcp
+###
+
+GET http://localhost:8000/.well-known/oauth-authorization-server
+###

@@ -1,6 +1,6 @@
 {
     "servers": {
-        "hello-mcp": {
+        "hello-mcp8": {
             "url": "http://localhost:8000/mcp"
         }
     }
