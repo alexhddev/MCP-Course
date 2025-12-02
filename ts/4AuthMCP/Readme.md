@@ -17,7 +17,6 @@
 
 4. **Create HelloName mcp files:**
    - create src/Server.ts
-   - create src/MainStdio.ts
 
 5. **Test the MCP:**
    - create .vscode/mcp.json file and add the server
