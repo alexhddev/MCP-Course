@@ -1,0 +1,22 @@
+{
+  "name": "4authmcp",
+  "version": "1.0.0",
+  "description": "1. **Initialize the project in emtpy folder:**    ```bash    npm init -y    ```",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsx src/Server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.23.0",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.10.1",
+    "express": "^5.2.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "zod": "^4.1.13"
+  }
+}
