@@ -2,6 +2,10 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express from 'express';
 
+// auth imports:
+import { authMiddleware } from './lib/Auth'
+import { corsMiddleware } from './lib/Cors'
+
 const server = new McpServer({
     name: 'demo-server',
     version: '1.0.0'
@@ -24,11 +28,38 @@ server.registerTool(
 // Set up Express and HTTP transport
 const app = express();
 app.use(express.json());
+app.use(authMiddleware);
+app.use(corsMiddleware);
 
 // Request logging middleware
 app.use((req, res, next) => {
     console.log(`REQUEST: ${req.method} ${req.url}`, req.body);
     next();
+});
+
+// OAuth protected resource metadata endpoint
+app.get('/.well-known/oauth-protected-resource/mcp', (req, res) => {
+    res.json({
+        authorization_servers: ['http://localhost:4000/authorize'],
+        bearer_methods_supported: ['header', 'body'],
+        resource: 'http://localhost:8000/mcp',
+        scopes_supported: ['mcp:tools:search:read'],
+    });
+});
+
+// OAuth authorization server metadata endpoint
+app.get('/.well-known/oauth-authorization-server', (req, res) => {
+    console.log('[OAuth] GET /.well-known/oauth-authorization-server');
+    res.json({
+        issuer: 'http://localhost:4000',
+        authorization_endpoint: 'http://localhost:4000/authorize',
+        token_endpoint: 'http://localhost:4000/token',
+        registration_endpoint: 'http://localhost:4000/register',
+        response_types_supported: ['code'],
+        grant_types_supported: ['authorization_code'],
+        code_challenge_methods_supported: ['S256'],
+        scopes_supported: ['mcp:tools:search:read'],
+    });
 });
 
 app.post('/mcp', async (req, res) => {
